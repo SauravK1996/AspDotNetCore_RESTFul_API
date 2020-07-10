@@ -64,27 +64,23 @@ namespace ParkyWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Login(NewUser obj)
-        public ActionResult Login(User obj)
+        public async Task<IActionResult> Login(User obj)
         {
-            User user = new User { Password = obj.Password, Username = obj.Username };
-            //User objUser = await _accountRepository.LoginAsync(SD.AccountAPIPath + "authenticate/", obj);
-            //if (objUser.Token == null)
-            //{
-            //    return View();
-            //}
+            User objUser = await _accountRepository.LoginAsync(SD.AccountAPIPath + "authenticate/", obj);
+            if (objUser.Token == null)
+            {
+                return View();
+            }
 
-            //var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-            //identity.AddClaim(new Claim(ClaimTypes.Name,objUser.Username));
-            //identity.AddClaim(new Claim(ClaimTypes.Role,objUser.Role));
-            //var principal = new ClaimsPrincipal(identity);
-            //await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+            var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+            identity.AddClaim(new Claim(ClaimTypes.Name,objUser.Username));
+            identity.AddClaim(new Claim(ClaimTypes.Role,objUser.Role));
+            var principal = new ClaimsPrincipal(identity);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-            //HttpContext.Session.SetString("JWToken", objUser.Token);
-            //TempData["alert"] = "Welcome " + objUser.Username;
-
-           return Json(obj, new Newtonsoft.Json.JsonSerializerSettings());
-           // return RedirectToAction("Index");
+            HttpContext.Session.SetString("JWToken", objUser.Token);
+            TempData["alert"] = "Welcome " + objUser.Username;
+            return RedirectToAction("Index");
         }
 
         [HttpGet]

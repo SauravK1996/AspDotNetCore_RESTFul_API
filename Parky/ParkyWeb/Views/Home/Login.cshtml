@@ -5,57 +5,8 @@
 
 <h1>Login</h1>
 
-@*<form method="post">*@
-<form id="userData">
-    @*<input asp-for="Username" type="text" placeholder="Username..." />
-        <input asp-for="Password" type="text" placeholder="Password..." />*@
-
-    <input name="Username" id="Username" type="text" placeholder="Username..." />
-    <input name="Password" id="Password" type="text" placeholder="Password..." />
-
-    <button type="submit" id="btnLogin" value="Submit">Login</button>
+<form method="post">
+    <input asp-for="Username" type="text" placeholder="Username..." />
+    <input asp-for="Password" type="text" placeholder="Password..." />
+    <button type="submit" value="Submit">Login</button>
 </form>
-
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-
-@*<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>*@
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#btnLogin").click(function () {
-            debugger;
-            //$('body').on('click', '#btnLogin', function (e) {
-            //var valdata = $("#userData").serialize();
-            //alert(valdata);
-            var newUser = {};
-            newUser.Username = $('input[name="Username"]').val();
-            newUser.Password = $('input[name="Password"]').val();
-          
-            var items = JSON.stringify(newUser);
-
-            $.post({
-                url: '/Home/Login',
-                type: "POST",
-                //data: items,
-                data: JSON.stringify({
-                    "Username": "username1",
-                    "Password": "password1"
-                }),
-                contentType: 'application/json; charset=utf-8',
-                dataType: "json",
-                success: function (response) {
-                    debugger;
-                   console.log(response);
-                },
-                error: function (error) {
-                    debugger;
-                    console.log(error);
-                },
-                complete: function () {
-                    debugger;
-                    console.log("complete func");
-                }
-            });
-        });
-    });
-</script>

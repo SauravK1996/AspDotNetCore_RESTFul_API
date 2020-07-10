@@ -2,7 +2,6 @@
 
 $(document).ready(function () {
     loadDataTable();
-    debugger;
 });
 
 function loadDataTable() {

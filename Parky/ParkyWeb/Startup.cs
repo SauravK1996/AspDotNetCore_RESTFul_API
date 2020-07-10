@@ -72,7 +72,7 @@ namespace ParkyWeb
             app.UseStaticFiles();
 
             app.UseRouting();
-            app.UseCors(x => x
+            app.UseCors(x=>x
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
